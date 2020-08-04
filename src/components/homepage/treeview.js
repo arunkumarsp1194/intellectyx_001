@@ -3,15 +3,17 @@ import './treeview.css'
 import Form from './form'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
-import Button from '@material-ui/core/Button';
+
 import Notiflix from "notiflix-react";
+import {Redirect} from "react-router-dom"
 
 class TreeView extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
             person:[],
-            updateperson:[]
+            updateperson:[],
+            logout:false
          }
 
                  axios.get(`http://localhost:3000/get_all_posts`)
@@ -84,8 +86,20 @@ class TreeView extends React.Component {
                 })
               }
 
+              handlelogout = event => {
+                this.setState(
+                    {
+                      logout : true
+                    }
+                );
+              }
+
    
     render() { 
+        let redirect=null;
+    if(this.state.logout){
+      redirect = <Redirect to="/signup" />
+    }
         return ( 
             
             <div className="main-container">
@@ -100,7 +114,7 @@ class TreeView extends React.Component {
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><Link to="/" className = "href nav-link">Logout</Link></button>
     </form>
   </div>
 </nav>
