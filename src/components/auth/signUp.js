@@ -1,61 +1,35 @@
-import React from 'react';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+import React, {useState} from 'react';
+import {  Link } from 'react-router-dom'
 import axios from 'axios';
 
-
-class SignUp extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { 
+const SignUp = () => {
+  const [usersignup, setusersighup] = useState({
           username : '',
           email : '',
           password : '',
           reenterpassword : ''
+  });
 
-         };
+
          
-    }
+    
 
-    handlechange = event => {
-      this.setState(
-          {
-              username: event.target.value
-          }
-      );
+   const handlechange = event => {
+    const {id , value} = event.target   
+    setusersighup(prevState => ({
+        ...prevState,
+        [id] : value
+      }))
   }
 
-  handlechangeemail = event => {
-    this.setState(
-        {
-            email: event.target.value
-        }
-    );
-}
-
-handlechangepassword = event => {
-  this.setState(
-      {
-        password: event.target.value
-      }
-  );
-}
-
-handlechangereenterpassword = event => {
-  this.setState(
-      {
-        reenterpassword: event.target.value
-      }
-  );
-}
-
-    handlesubmit = event => {
+    const handlesubmit = event => {
       event.preventDefault();
   
       const user = {
-          name: this.state.username,
-          email: this.state.email,
-          password: this.state.password,
-          cpassword: this.state.reenterpassword
+          name: usersignup.username,
+          email: usersignup.email,
+          password: usersignup.password,
+          cpassword: usersignup.reenterpassword
 
       };
       console.log("value:",user)
@@ -67,7 +41,7 @@ handlechangereenterpassword = event => {
 
     
 
-    render() { 
+    
         return ( 
             <div class="card">
                 <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
@@ -80,24 +54,24 @@ handlechangereenterpassword = event => {
               <div class="card__wrap">
                 
                 <div class="card__form">
-                  <input class="card__input" type="text" placeholder="Username" value={this.state.username} onChange={this.handlechange}></input>
+                  <input class="card__input" type="text" id="username" placeholder="Username" value={usersignup.username} onChange={handlechange}></input>
                   <span class="card__icon">
                     
                   </span>
                   
-                  <input class="card__input" type="email" placeholder="email" value={this.state.email} onChange={this.handlechangeemail}></input>
+                  <input class="card__input" type="email" id="email" placeholder="email" value={usersignup.email} onChange={handlechange}></input>
                   
           
-                  <input class="card__input" type="password" placeholder="Password" value={this.state.password} onChange={this.handlechangepassword}></input>
+                  <input class="card__input" type="password" id="password" placeholder="Password" value={usersignup.password} onChange={handlechange}></input>
                   <span class="card__icon1">
                     
                   </span>
 
-                  <input class="card__input" type="password" placeholder="re-enter Password" value={this.state.reenterpassword} onChange={this.handlechangereenterpassword}></input>
+                  <input class="card__input" type="password" id="reenterpassword" placeholder="re-enter Password" value={usersignup.reenterpassword} onChange={handlechange}></input>
                   <span class="card__icon1">
                     
                   </span>
-                  <button type="submit" class="card__btn" onClick={this.handlesubmit}>Create</button>
+                  <button type="submit" class="card__btn" onClick={handlesubmit}>Create</button>
                  
                 </div>
               </div>
@@ -110,6 +84,6 @@ handlechangereenterpassword = event => {
           </div>
          );
     }
-}
+
  
 export default SignUp;

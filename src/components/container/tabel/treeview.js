@@ -1,6 +1,6 @@
 import React from 'react';
 import './treeview.css'
-import Form from './form'
+import Form from '../form/form'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 

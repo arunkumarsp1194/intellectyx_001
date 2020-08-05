@@ -1,10 +1,10 @@
 import React from 'react';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 //import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Login from './components/login/login';
-import SignUp from './components/login/signUp';
-import TreeView from './components/homepage/treeview';
-import Form from './components/homepage/form'
+import Login from './components/auth/login';
+import SignUp from './components/auth/signUp';
+import TreeView from './components/container/tabel/treeview';
+import Form from './components/container/form/form'
 
 
 class Routering extends React.Component {

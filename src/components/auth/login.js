@@ -1,22 +1,17 @@
-import React from "react";
-import { useHistory, Link, BrowserRouter as Router } from "react-router-dom";
+import React, {useState} from "react";
+import {  Link} from "react-router-dom";
 import axios from 'axios';
 import {Redirect} from "react-router-dom"
 import Notiflix from "notiflix-react";
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username : '',
+const Login = () => {
+  const [userlogin, setUserlogin] = useState({
+    username : '',
       password : '',
       validuser : false
-     
-    };
+  });
 
-  }
-
-  componentDidMount() {
+  const componentDidMount = () => {
       
     // Init Notify Module
     Notiflix.Notify.Init({});
@@ -41,33 +36,25 @@ class Login extends React.Component {
   }
   
 
-  handlechange = event => {
-    this.setState(
-        {
-            username: event.target.value,
-
-        }
-    );
+  const handlechange = event =>  {
+    const {id , value} = event.target   
+    setUserlogin(prevState => ({
+        ...prevState,
+        [id] : value
+    }))
 }
 
 
-handlechangePassword = event => {
-  this.setState(
-      {
-          password: event.target.value,
-          
-      }
-  );
-}
+
  
-  handlesubmit = event => {
+  const handlesubmit = event => {
     event.preventDefault();
 
     const user = {
-        email: this.state.username,
-        password: this.state.password
+        email: userlogin.username,
+        password: userlogin.password
     };
-    if(this.state.username=="" || this.state.password=="")
+    if(userlogin.username==="" || userlogin.password==="")
     {
       Notiflix.Notify.Failure('Username or password cannot be empty');
     }
@@ -76,9 +63,9 @@ handlechangePassword = event => {
        axios.post(`http://localhost:3000/login_auth`,  user )
            .then(res => {
                console.log(res);
-               if(res['data']['valid_user']==true)
+               if(res['data']['valid_user']===true)
                {
-                 this.setState({validuser : true})
+                setUserlogin({validuser : true})
                  Notiflix.Notify.Success('Logged in successfully');
                }
                else{
@@ -90,9 +77,9 @@ handlechangePassword = event => {
  
 
 }
-  render() {
+  
     let redirect=null;
-    if(this.state.validuser){
+    if(userlogin.validuser){
       redirect = <Redirect to="/TreeView" />
     }
     
@@ -115,8 +102,9 @@ handlechangePassword = event => {
                 className="card__input"
                 type="text"
                 placeholder="Username"
-                value={this.state.username}
-                onChange={this.handlechange}
+                value={userlogin.username}
+                id = "username"
+                onChange={handlechange}
               ></input>
               <span className="card__icon">
                 <svg
@@ -138,13 +126,14 @@ handlechangePassword = event => {
                 class="card__input"
                 type="password"
                 placeholder="Password"
-                value ={this.state.password}
-                onChange={this.handlechangePassword}
+                value ={userlogin.password}
+                id = "password"
+                onChange={handlechange}
               ></input>
               <span className="card__icon1">
                
               </span>
-              <button type="submit" class="card__btn" onClick={this.handlesubmit}>
+              <button type="submit" class="card__btn" onClick={handlesubmit}>
                 Login
               </button>
             </div>
@@ -157,6 +146,6 @@ handlechangePassword = event => {
       </div>
     );
   }
-}
+
 
 export default Login;

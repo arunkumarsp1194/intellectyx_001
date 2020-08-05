@@ -1,9 +1,8 @@
 import React from 'react';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
+import {  BrowserRouter as Router } from 'react-router-dom';
 
 import './App.css';
 import Routering from './routes';
-import TreeView from './components/homepage/treeview'
 
 
 
